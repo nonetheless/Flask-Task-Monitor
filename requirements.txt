@@ -1,0 +1,6 @@
+six>=1.10.0
+wrapt>=1.10.11
+SQLAlchemy>=1.1.13
+MySQL-python; python_version < '3.2'
+PyMySQL>=0.8.0
+mysqlclient; python_version >= '3.2'
