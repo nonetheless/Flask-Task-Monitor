@@ -1,4 +1,4 @@
-# Flask Monitor
+# Flask Task Monitor
 A flask plugin to monitor thread task
 
 ## How to use
