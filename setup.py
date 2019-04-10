@@ -7,7 +7,7 @@ This is the description for that library
 import os
 from setuptools import setup, find_packages
 
-__version__ = '1.2'
+__version__ = '1.3'
 __desc__ = "Flask Task Monitor module"
 __urlpkg__ = "http://github.com/nonetheless/Flask-Task-Monitor.git"
 
@@ -26,8 +26,9 @@ def walk_path_files(directory, target_folder=None):
     return res
 
 
-with open('README.rst') as f:
-    LONG_DESC = f.read().splitlines()
+HERE = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(HERE, 'README.rst')) as readme:
+        LONG_DESC = readme.read()
 
 data_files = []
 
