@@ -29,37 +29,7 @@ data_files = []
 requirements = open(os.path.join(os.path.dirname(__file__), 'requirements.txt')).readlines()
 install_requires = [i.strip('\r\n ') for i in requirements]
 setup(
-    name='Flask-Monitor',
-    version='1.0',
-    url='http://example.com/flask-monitor/',
-    license='BSD',
-    author='Your Name',
-    author_email='your-email@example.com',
-    description='Very short description',
-    long_description=__doc__,
-    py_modules=['flask_monitor'],
-    # if you would be using a package instead use packages instead
-    # of py_modules:
-    # packages=['flask_monitor'],
-    zip_safe=False,
-    include_package_data=True,
-    platforms='any',
-    install_requires=[
-        'Flask'
-    ],
-    classifiers=[
-        'Environment :: Web Environment',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
-        'Topic :: Software Development :: Libraries :: Python Modules'
-    ]
-)
-
-setup(
-    name='Flask-Monitor',
+    name='Flask-Task-Monitor',
     version=__version__,
     packages=find_packages(),
     include_package_data=True,
