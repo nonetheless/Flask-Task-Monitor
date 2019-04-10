@@ -1,5 +1,5 @@
 # Flask Monitor
-a flask plugin to monitor thread task
+A flask plugin to monitor thread task
 
 ## How to use
 ### Install
@@ -56,7 +56,7 @@ monitor.add_check_monitor(DemoMonitorJob)
 
 ```
 ### Your own monitor 
-you can use write your own monitor by redis, zookeeper, etcd and more
+You can code your own monitor by redis, zookeeper, etcd and more
 ```python
 from flask_monitor import BaseMonitorInterface
 class YourMonitor(BaseMonitorInterface):
