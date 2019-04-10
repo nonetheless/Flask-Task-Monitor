@@ -162,5 +162,5 @@ class Monitor(MiniterDaemonSingleton):
     def start(self):
         # Background thread handling with the configs refreshing
         logger.info('Starting the ha manager ...')
-        self.set_worker(self._worker, period=self.app.config.get('FLASK_MONITOR_PERIOD', 1))
+        self.set_worker(self._worker, period=self.app.config.get('FLASK_MONITOR_PERIOD', 180))
         super(Monitor, self).start()
