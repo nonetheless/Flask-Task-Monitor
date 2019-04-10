@@ -19,18 +19,25 @@ class Muti_Lock(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(50), unique=True)
-    update_time = Column(DateTime, onupdate=datetime.datetime.now)
+    update_time = Column(DateTime)
 
-    def __init__(self, name):
+    def __init__(self, name, time):
         self.name = name
+        self.update_time = time
 
 
 def sync_lock_decorator(name):
     """Decorator to handle with request timeout"""
 
     def _lock():
-        lock = Muti_Lock(name)
         try:
+            locks = s.query(Muti_Lock).filter_by(name=name).all()
+            for lock in locks:
+                delta = datetime.datetime.now() - lock.update_time
+                if delta > 600:
+                    s.delete(lock)
+            s.commit()
+            lock = Muti_Lock(name, datetime.datetime.now())
             s.add(lock)
             s.commit()
         except Exception:
@@ -117,6 +124,7 @@ class DBMonitor(BaseMonitorInterface):
         obj_config = kwargs.get('wrapped').__self__.__dict__
         args_dict = []
         kwargs_dict = {}
+        object_dict = {}
         for value in args:
             if type(value) == list or type(value) == dict or type(value) == str or type(value) == float or type(
                     value) == bool or type(value) == int:
@@ -126,9 +134,14 @@ class DBMonitor(BaseMonitorInterface):
                     value) == bool or type(value) == int:
                 kwargs_dict[key] = value
 
+        for key, value in obj_config.items():
+            if type(value) == list or type(value) == dict or type(value) == str or type(value) == float or type(
+                    value) == bool or type(value) == int:
+                object_dict[key] = value
+
         lock_insert = Monitor_Lock(
             monitorname=claz_name,
-            obj_config=json.dumps(obj_config),
+            obj_config=json.dumps(object_dict),
             args=json.dumps(args_dict),
             kwargs=json.dumps(kwargs_dict),
             create_time=datetime.datetime.now()
