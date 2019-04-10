@@ -9,7 +9,7 @@ python setup.py install
 ```
 Or install with pip:
 ```bash
-pip install Flask-Monitor
+pip install Flask-Task-Monitor
 ```
 ### Setup
 Adding the extension to your Flask app is simple:
