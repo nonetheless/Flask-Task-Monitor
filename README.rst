@@ -1,24 +1,27 @@
-=============
+==================
 Flask Task Monitor
-=============
+==================
 A flask plugin to monitor thread task
 
 How to use
-=============
+==========
 Install
-----------
+-------
 To install from source, download the source code, then run this:
 ::
+
     python setup.py install
 
 Or install with pip:
 ::
+
     pip install Flask-Task-Monitor
 
 Setup
-=============
+=====
 Adding the extension to your Flask app is simple:
 ::
+
     from flask import Flask
     from flask_monitor import Monitor
     monitor = Monitor(config={
@@ -29,6 +32,7 @@ Adding the extension to your Flask app is simple:
 
 Add monitered task with database
 ::
+
     from flask_monitor import DBMonitor
     from yourapplication import monitor
 
@@ -59,9 +63,10 @@ Add monitered task with database
     monitor.add_check_monitor(DemoMonitorJob)
 
 Your own monitor
-============
+================
 You can code your own monitor by redis, zookeeper, etcd and more
 ::
+
     from flask_monitor import BaseMonitorInterface
     class YourMonitor(BaseMonitorInterface):
         def lock(self, *args, **kwargs):
@@ -79,8 +84,7 @@ You can code your own monitor by redis, zookeeper, etcd and more
         @classmethod
         def check(cls, *args, **kwargs):
             '''
-            your own check function:
-            it will return to
+            your own check function:            it will return to
                 try:
                     redo(list, dict)
                 except Expection:
