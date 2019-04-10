@@ -7,7 +7,9 @@ This is the description for that library
 import os
 from setuptools import setup, find_packages
 
-__version__ = '1.0'
+__version__ = '1.1'
+__desc__ = "Flask Task Monitor module"
+__urlpkg__ = "http://github.com/nonetheless/Flask-Task-Monitor.git"
 
 
 def walk_path_files(directory, target_folder=None):
@@ -24,6 +26,9 @@ def walk_path_files(directory, target_folder=None):
     return res
 
 
+with open('README.md') as f:
+    LONG_DESC = f.read().splitlines()
+
 data_files = []
 
 requirements = open(os.path.join(os.path.dirname(__file__), 'requirements.txt')).readlines()
@@ -34,11 +39,12 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     data_files=data_files,
-    url='http://github.com/nonetheless/flask-monitor',
-    license='',
+    url='http://github.com/nonetheless/Flask-Task-Monitor',
+    license='MIT',
     author='nonetheless',
     author_email='',
-    description='flask monitor plugin',
+    description=__desc__,
+    long_description=LONG_DESC,
     install_requires=install_requires,
     keywords=['utility', 'versioning'],
     classifiers=[
