@@ -26,7 +26,7 @@ def walk_path_files(directory, target_folder=None):
     return res
 
 
-with open('README.md') as f:
+with open('README.rst') as f:
     LONG_DESC = f.read().splitlines()
 
 data_files = []
