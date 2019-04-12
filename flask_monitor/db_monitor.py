@@ -159,13 +159,6 @@ class DBMonitor(BaseMonitorInterface):
     @sync_lock_decorator("dbmonitor")
     def check(cls, *args, **kwargs):
         locks = s.query(Monitor_Lock).filter_by(monitorname=cls.__name__).all()
-        try:
-            for lock in locks:
-                s.delete(lock)
-            s.commit()
-        except Exception:
-            # break
-            return
         redo_list = []
         for lock in locks:
             delta = datetime.datetime.now() - lock.create_time
@@ -178,6 +171,8 @@ class DBMonitor(BaseMonitorInterface):
                     'args': json.loads(lock.args),
                     'object': json.loads(lock.obj_config)
                 })
+                s.delete(lock)
+        s.commit()
         return redo_list, {}
 
     @classmethod
