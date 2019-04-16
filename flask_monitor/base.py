@@ -156,8 +156,8 @@ class Monitor(MiniterDaemonSingleton):
                         logger.warning(e)
                         value.rollback(*args, **kwargs)
 
-    def add_check_monitor(self, claz: BaseMonitorInterface):
-        self.check_map[type(claz).__name__] = claz.__class__
+    def add_check_monitor(self, claz):
+        self.check_map[claz.__name__] = claz
 
     def start(self):
         # Background thread handling with the configs refreshing

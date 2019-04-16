@@ -27,5 +27,5 @@ monitor.start()
 
 if __name__ == '__main__':
     hello = HelloMonitor()
-    monitor.add_check_monitor(hello)
+    monitor.add_check_monitor(HelloMonitor)
     hello.do(cluster_id=1)
