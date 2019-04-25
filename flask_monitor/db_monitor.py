@@ -7,7 +7,7 @@ import random
 from .base import BaseMonitorInterface
 from abc import abstractmethod
 from sqlalchemy import create_engine, Column, DateTime, Integer, String, Text
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
 
 db_url = os.getenv('SQLALCHEMY_DATABASE_URI', '')
@@ -100,13 +100,12 @@ class Monitor_Lock(Base):
 Base.metadata.create_all(engine)
 
 # Construct a sessionmaker factory object
-session = sessionmaker()
+session_factory = sessionmaker(bind=engine)
 
-# Bind the sessionmaker to engine
-session.configure(bind=engine)
+Session = scoped_session(session_factory)
 
 # Generate a session to work with
-s = session()
+s = Session()
 
 
 class DBMonitor(BaseMonitorInterface):
