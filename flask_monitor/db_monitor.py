@@ -36,7 +36,7 @@ def sync_lock_decorator(name):
             s.add(lock)
             s.commit()
         except Exception:
-            s.roll_back()
+            s.rollback()
             # clear timeout lock
             time.sleep(random.randint(1, 10))
             locks = s.query(Muti_Lock).filter_by(name=name).all()
@@ -47,7 +47,7 @@ def sync_lock_decorator(name):
             try:
                 s.commit()
             except Exception:
-                s.roll_back()
+                s.rollback()
             return None
         return lock
 
@@ -126,7 +126,7 @@ class DBMonitor(BaseMonitorInterface):
             try:
                 s.commit()
             except Exception:
-                s.roll_back()
+                s.rollback()
 
     def lock(self, *args, **kwargs):
         claz_name = kwargs.get('wrapped').__self__.__class__.__name__
@@ -159,7 +159,7 @@ class DBMonitor(BaseMonitorInterface):
         try:
             s.commit()
         except Exception:
-            s.roll_back()
+            s.rollback()
         return lock_insert.id
 
     @classmethod
