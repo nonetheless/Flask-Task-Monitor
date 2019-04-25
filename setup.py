@@ -7,7 +7,7 @@ This is the description for that library
 import os
 from setuptools import setup, find_packages
 
-__version__ = '1.6'
+__version__ = '1.7'
 __desc__ = "Flask Task Monitor module"
 __urlpkg__ = "http://github.com/nonetheless/Flask-Task-Monitor.git"
 

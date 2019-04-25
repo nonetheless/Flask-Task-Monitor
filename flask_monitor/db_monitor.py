@@ -3,6 +3,7 @@ import json
 import datetime
 import functools
 import time
+import random
 from .base import BaseMonitorInterface
 from abc import abstractmethod
 from sqlalchemy import create_engine, Column, DateTime, Integer, String, Text
@@ -30,17 +31,23 @@ def sync_lock_decorator(name):
     """Decorator to handle with request timeout"""
 
     def _lock():
+        lock = Muti_Lock(name, datetime.datetime.now())
         try:
+            s.add(lock)
+            s.commit()
+        except Exception:
+            s.roll_back()
+            # clear timeout lock
+            time.sleep(random.randint(1, 10))
             locks = s.query(Muti_Lock).filter_by(name=name).all()
             for lock in locks:
                 delta = datetime.datetime.now() - lock.update_time
                 if delta > 600:
                     s.delete(lock)
-            s.commit()
-            lock = Muti_Lock(name, datetime.datetime.now())
-            s.add(lock)
-            s.commit()
-        except Exception:
+            try:
+                s.commit()
+            except Exception:
+                s.roll_back()
             return None
         return lock
 
