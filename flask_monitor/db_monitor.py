@@ -124,7 +124,10 @@ class DBMonitor(BaseMonitorInterface):
         lock = s.query(Monitor_Lock).filter_by(id=id).first()
         if lock is not None:
             s.delete(lock)
-            s.commit()
+            try:
+                s.commit()
+            except Exception:
+                s.roll_back()
 
     def lock(self, *args, **kwargs):
         claz_name = kwargs.get('wrapped').__self__.__class__.__name__
@@ -154,7 +157,10 @@ class DBMonitor(BaseMonitorInterface):
             create_time=datetime.datetime.now()
         )
         s.add(lock_insert)
-        s.commit()
+        try:
+            s.commit()
+        except Exception:
+            s.roll_back()
         return lock_insert.id
 
     @classmethod
