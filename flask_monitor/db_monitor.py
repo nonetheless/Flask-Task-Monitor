@@ -42,7 +42,7 @@ def sync_lock_decorator(name):
             locks = s.query(Muti_Lock).filter_by(name=name).all()
             for lock in locks:
                 delta = datetime.datetime.now() - lock.update_time
-                if delta > 600:
+                if delta.seconds > 600:
                     s.delete(lock)
             try:
                 s.commit()
